@@ -4,4 +4,3 @@ applications:
   buildpacks:
   - binary_buildpack
   command: ./run.sh
-  # health-check-type: none
