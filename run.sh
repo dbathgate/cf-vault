@@ -2,7 +2,7 @@
 
 MYSQL_EXISTS=$(echo $VCAP_SERVICES | jq '.["p.mysql"]')
 
-if [ $MYSQL_EXISTS = null ]; then
+if [ "$MYSQL_EXISTS" = "null" ]; then
 
    echo "MySQL Service not bound..."
    echo "Running vault in dev mode..."
