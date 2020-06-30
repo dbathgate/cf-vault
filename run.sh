@@ -1,5 +1,7 @@
 #!/bin/bash
 
+printenv
+
 MYSQL_EXISTS=$(echo $VCAP_SERVICES | jq '.["p.mysql"]')
 
 if [ "$MYSQL_EXISTS" = "null" ]; then
@@ -14,6 +16,9 @@ else
     DB_NAME=$(echo $VCAP_SERVICES | jq '.["p.mysql"][0].credentials.name')
     DB_USERNAME=$(echo $VCAP_SERVICES | jq '.["p.mysql"][0].credentials.username')
     DB_PASSWORD=$(echo $VCAP_SERVICES | jq '.["p.mysql"][0].credentials.password')
+    DB_CA=$(echo $VCAP_SERVICES | jq '.["p.mysql"][0].credentials.tls.cert.ca')
+
+    echo $DB_CA | awk '{gsub(/\\n/,"\n")}1' | sed "s/\"//g" > ca.pem
 
     cp vault-template.conf vault.conf
 
